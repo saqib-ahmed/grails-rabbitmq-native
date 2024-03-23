@@ -91,7 +91,7 @@ enum ExchangeType {
         }
 
         // Return the found ExchangeType
-        return foundType
+        return foundType.realName
     }
 
 }
