@@ -40,6 +40,11 @@ enum ExchangeType {
     HEADERS
 
     /**
+     * Consistent Hashing exchange.
+     */
+    X-CONISTENT-HASH
+
+    /**
      * Logger.
      */
     private static Logger log = LoggerFactory.getLogger(ExchangeType)
