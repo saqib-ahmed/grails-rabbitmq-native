@@ -9,6 +9,7 @@ buildscript {
 
 apply plugin:"eclipse"
 apply plugin:"idea"
+apply plugin:"maven-publish"
 apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
 
@@ -68,6 +69,18 @@ grailsPublish {
     vcsUrl = 'https://github.com/budjb/grails-rabbitmq-native.git'
 }
 
+publishing {
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/saqib-ahmed/grails-rabbitmq-native") // Replace OWNER and REPOSITORY
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
+}
 /*
 publishing {
     publications {

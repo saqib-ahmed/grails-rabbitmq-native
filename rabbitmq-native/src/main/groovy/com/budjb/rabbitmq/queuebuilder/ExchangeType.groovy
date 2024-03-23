@@ -22,51 +22,76 @@ enum ExchangeType {
     /**
      * Fanout exchange.
      */
-    FANOUT,
+    FANOUT('fanout'),
 
     /**
      * Direct exchange.
      */
-    DIRECT,
+    DIRECT('direct'),
 
     /**
      * Topic exchange.
      */
-    TOPIC,
+    TOPIC('topic'),
 
     /**
      * Headers exchange.
      */
-    HEADERS
+    HEADERS('headers'),
 
     /**
      * Consistent Hashing exchange.
      */
-    X-CONISTENT-HASH
+    XCONSISTENTHASH('x-consistent-hash')
+
+    /**
+     * The actual name to be used for the exchange type.
+     */
+    private final String realName
+
+    /**
+     * Constructor with real name.
+     */
+    private ExchangeType(String realName) {
+        this.realName = realName
+    }
+
+    /**
+     * Returns the real name of the exchange type.
+     */
+    String getRealName() {
+        return this.realName
+    }
 
     /**
      * Logger.
      */
-    private static Logger log = LoggerFactory.getLogger(ExchangeType)
+    private static final Logger log = LoggerFactory.getLogger(ExchangeType)
 
     /**
      * Returns the enum that matches the given value regardless of character case.
      *
-     * If no match is found, <code>null</code> is returned.
+     * If no match is found, null is returned.
      *
-     * @param val
-     * @return
+     * @param val The string value to look up.
+     * @return The matching ExchangeType, or null if no match is found.
      */
     static ExchangeType lookup(String val) {
         if (val == null) {
             return null
         }
-        try {
-            return valueOf(val.toUpperCase())
-        }
-        catch (IllegalArgumentException e) {
-            log.trace("no MatchType with name '${val}' found", e)
+
+        // Find the matching ExchangeType
+        ExchangeType foundType = values().find { it.realName.equalsIgnoreCase(val) }
+
+        // If no matching type is found, log the error and return null
+        if (foundType == null) {
+            log.trace("No ExchangeType with name '${val}' found")
             return null
         }
+
+        // Return the found ExchangeType
+        return foundType
     }
+
 }
